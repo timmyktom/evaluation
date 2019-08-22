@@ -12,6 +12,12 @@ import { GetUsers } from './shared/actions';
 })
 class MockUsersComponent {}
 
+@Component({
+  selector: 'app-posts',
+  template: '',
+})
+class MockPostsComponent {}
+
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
@@ -30,7 +36,7 @@ describe('AppComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        AppComponent, MockUsersComponent
+        AppComponent, MockUsersComponent, MockPostsComponent
       ],
     }).compileComponents();
   }));

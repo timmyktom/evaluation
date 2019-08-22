@@ -12,5 +12,5 @@ export class UsersService {
 
   getUsers() {
     return this.http.get<User[]>('https://jsonplaceholder.typicode.com/users');
-}
+  }
 }

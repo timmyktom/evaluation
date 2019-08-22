@@ -1,2 +1,3 @@
 import { UserEffects } from '../users/users.effects';
-export const effects = [UserEffects];
+import { PostsEffects } from '../posts/posts.effects';
+export const effects = [UserEffects, PostsEffects];

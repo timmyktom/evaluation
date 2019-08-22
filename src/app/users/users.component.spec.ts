@@ -5,6 +5,7 @@ import { StoreModule, Store, Action } from '@ngrx/store';
 import { AppState } from '../shared/reducers';
 import { UsersComponent } from './users.component';
 import { UserState, initialUserState} from './users.reducers';
+import { SetSelectedUser } from './users.actions';
 import { MockReducer } from '../../tests-utils/';
 import * as mockUserData from '../../tests-utils/mock-users';
 
@@ -63,6 +64,17 @@ describe('UsersComponent', () => {
         spyOn(component.userStoreSubscription, 'unsubscribe');
         component.ngOnDestroy();
         expect(component.userStoreSubscription.unsubscribe).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('When onUserSelect is called ', () => {
+    it('should dispatch action SetSelectedUser', (done) => {
+        const expectedAction = new SetSelectedUser(1);
+        spyOn(store, 'dispatch').and.callFake((actualAction: Action) => {
+            expect(actualAction).toEqual(expectedAction);
+            done();
+        });
+        component.onUserSelect(1);
     });
   });
 });

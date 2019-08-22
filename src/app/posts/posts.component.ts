@@ -2,18 +2,19 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from '../shared/reducers';
-import { User } from './users.model';
-import { UserState } from './users.reducers';
-import { SetSelectedUser } from './users.actions';
+import { UserState } from '../users/users.reducers';
+import { PostState } from './posts.reducers';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  selector: 'app-posts',
+  templateUrl: './posts.component.html',
+  styleUrls: ['./posts.component.scss']
 })
-export class UsersComponent implements OnInit, OnDestroy {
+export class PostsComponent implements OnInit, OnDestroy {
   userStoreSubscription: Subscription;
+  postStoreSubscription: Subscription;
   userState: UserState;
+  postState: PostState;
   constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
@@ -21,16 +22,19 @@ export class UsersComponent implements OnInit, OnDestroy {
       this.store.select(state => state.userState).subscribe((uState) => {
         this.userState = uState;
       });
+
+    this.postStoreSubscription =
+      this.store.select(state => state.postState).subscribe((pState) => {
+        this.postState = pState;
+      });
   }
 
   ngOnDestroy() {
     if (this.userStoreSubscription) {
       this.userStoreSubscription.unsubscribe();
     }
+    if (this.postStoreSubscription) {
+      this.postStoreSubscription.unsubscribe();
+    }
   }
-
-  onUserSelect(userId) {
-    this.store.dispatch(new SetSelectedUser(userId));
-  }
-
 }
