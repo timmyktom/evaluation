@@ -1,35 +1,58 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { Component } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
+import { StoreModule, Store, Action } from '@ngrx/store';
 import { AppComponent } from './app.component';
+import { GetUsers } from './shared/actions';
+
+@Component({
+  selector: 'app-users',
+  template: '',
+})
+class MockUsersComponent {}
 
 describe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+  let store: Store<{}>;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      providers: [
+        provideMockStore({
+          initialState: {
+            userState: {}
+          }
+        })
+      ],
       imports: [
         RouterTestingModule
       ],
       declarations: [
-        AppComponent
+        AppComponent, MockUsersComponent
       ],
     }).compileComponents();
   }));
 
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    store = fixture.componentRef.injector.get(Store);
+    fixture.detectChanges();
+});
+
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'evaluation'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('evaluation');
-  });
-
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to evaluation!');
+  describe('ngOnInit', () => {
+    it('should dispatch GetUsers action ', () => {
+      const actionUsers = new GetUsers();
+      const spyActionUsers = spyOn(store, 'dispatch');
+      component.ngOnInit();
+      expect(spyActionUsers).toHaveBeenCalledWith(actionUsers);
+    });
   });
 });
