@@ -1,0 +1,30 @@
+<div class="posts-container" 
+    *ngIf="userState && userState.selectedUser.id !== -1">
+    <p>Posts from {{userState.selectedUser.name}}:</p>
+    <div class="row posts-list">
+        <div class="col-12 post-item"
+            *ngFor="let post of postState.filteredPostList">
+            <div class="post-card alert alert-primary">
+                <div class="">
+                    <a href="#" class="alert-link">Title: </a>{{post.title}}
+                </div>
+                <div>
+                    <a href="#" class="alert-link">Body: </a>{{post.body}}
+                </div>
+            </div>
+
+            <a href="#">
+                <span class="align-middle">+</span>
+            </a>
+
+        </div>
+    </div>
+    <div class="row load-all-container" 
+        *ngIf="postState.filteredPostList.length > 0 && !postState.showAll">
+        <button 
+            type="button" 
+            class="btn btn-primary">
+            ...Load all
+        </button>
+    </div>
+</div>

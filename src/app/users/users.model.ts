@@ -57,6 +57,3 @@ export const defaultUser = {
     website: '',
     company: defaultCompany
 };
-
-
-

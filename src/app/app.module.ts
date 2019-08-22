@@ -10,11 +10,13 @@ import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
 import { reducers } from './shared/reducers';
 import { effects } from './shared/effects';
+import { PostsComponent } from './posts/posts.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UsersComponent
+    UsersComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,

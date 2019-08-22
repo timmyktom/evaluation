@@ -1,0 +1,21 @@
+.posts-container {
+    .posts-list {
+        .post-card {
+            width: 90%;
+            float: left;
+        }
+        a {
+            &:hover {
+                text-decoration: none;
+            }
+            span {
+                font-size: 50px;
+                margin-left: 10px;
+            }
+        }
+    }
+    .load-all-container {
+        float: right;
+        margin-right: 10%;
+    }
+}
