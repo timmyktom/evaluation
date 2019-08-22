@@ -68,5 +68,9 @@ function getPosts(postList) {
 }
 
 function getFirstThreePosts(postList) {
-    return postList.slice(0, 3);
+    if (postList.length > 3) {
+        return postList.slice(0, 3);
+    } else {
+        return postList;
+    }
 }
