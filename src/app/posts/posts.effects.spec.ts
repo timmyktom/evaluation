@@ -9,6 +9,7 @@ import { AppState } from '../shared/reducers';
 import * as usersActions from '../users/users.actions';
 import * as postsActions from './posts.actions';
 import * as mockPostData from '../../tests-utils/mock-posts';
+import * as mockCommentData from '../../tests-utils/mock-comments';
 
 describe('PostsEffects', () => {
     let effects: PostsEffects;
@@ -18,7 +19,9 @@ describe('PostsEffects', () => {
 
     beforeEach(() => {
         appState = new Subject<AppState>();
-        service = { getUserPosts(): any {}} as Partial<PostsService>;
+        service = {
+            getUserPosts(): any {},
+            getPostComments(): any {}} as Partial<PostsService>;
         actions$ = new ReplaySubject(1);
         TestBed.configureTestingModule({
             providers: [
@@ -75,6 +78,54 @@ describe('PostsEffects', () => {
             it('dispatch GetPostsError action on fail', (done) => {
                 effects.getUsersPostsEffects$.subscribe((resultAction) => {
                     const expectedAction = new postsActions.GetUsersPostsError(mockError);
+                    expect(resultAction).toEqual(expectedAction);
+                    done();
+                });
+            });
+        });
+    });
+
+    describe('GetPostComments action', () => {
+        let getPostCommentsServiceCall;
+        beforeEach(() => {
+            getPostCommentsServiceCall = spyOn(service, 'getPostComments');
+        });
+
+        describe('When GetPostComments action is dispatched', () => {
+            beforeEach(() => {
+                getPostCommentsServiceCall.and.returnValue(of([]));
+                effects.getPostCommentsEffects$.subscribe();
+                actions$.next(new postsActions.GetPostComments(1));
+            });
+            it('Check service is getting called', () => {
+                expect(getPostCommentsServiceCall).toHaveBeenCalledTimes(1);
+            });
+        });
+
+        describe('When GetPostComments action is dispatched with success response', () => {
+            const expectedPayload = mockCommentData.mockComments;
+            beforeEach(() => {
+                getPostCommentsServiceCall.and.returnValue(of(mockCommentData.mockComments));
+                actions$.next(new postsActions.GetPostComments(1));
+            });
+            it('dispatch GetPostCommentsSuccess action on success', (done) => {
+                effects.getPostCommentsEffects$.subscribe((resultAction) => {
+                    const expectedAction = new postsActions.GetPostCommentsSuccess(expectedPayload);
+                    expect(resultAction).toEqual(expectedAction);
+                    done();
+                });
+            });
+        });
+
+        describe('When GetPostComments action is dispatched with failed response', () => {
+            const mockError = { message: 'Error'};
+            beforeEach(() => {
+                getPostCommentsServiceCall.and.returnValue(throwError(mockError));
+                actions$.next(new postsActions.GetPostComments(1));
+            });
+            it('dispatch GetPostCommentsError action on fail', (done) => {
+                effects.getPostCommentsEffects$.subscribe((resultAction) => {
+                    const expectedAction = new postsActions.GetPostCommentsError(mockError);
                     expect(resultAction).toEqual(expectedAction);
                     done();
                 });

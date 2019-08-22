@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { By } from '@angular/platform-browser';
+import { Component } from '@angular/core';
 import { StoreModule, Store, Action } from '@ngrx/store';
 import { AppState } from '../shared/reducers';
 import { UsersComponent } from './users.component';
@@ -8,6 +9,12 @@ import { UserState, initialUserState} from './users.reducers';
 import { SetSelectedUser } from './users.actions';
 import { MockReducer } from '../../tests-utils/';
 import * as mockUserData from '../../tests-utils/mock-users';
+
+@Component({
+  selector: 'app-loader',
+  template: '',
+})
+class MockLoaderComponent {}
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
@@ -21,7 +28,7 @@ describe('UsersComponent', () => {
       providers: [
         provideMockStore({ initialState: { userState: {...userState}}})
       ],
-      declarations: [ UsersComponent ],
+      declarations: [ UsersComponent, MockLoaderComponent ],
       imports: [StoreModule.forRoot({
         userState: (state, action) => userState
       } as MockReducer<AppState>)]

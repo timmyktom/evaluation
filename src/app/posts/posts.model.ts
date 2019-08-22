@@ -13,6 +13,7 @@ export interface Post {
     body: string;
     comments: Comment[];
     isExpanded: boolean;
+    isCommentsLoading: boolean;
 }
 
 export const defaultComment = {
@@ -29,5 +30,6 @@ export const defaultPost = {
     title: '',
     body: '',
     comments: [],
-    isExpanded: false
+    isExpanded: false,
+    isCommentsLoading: false
 };

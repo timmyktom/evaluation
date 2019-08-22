@@ -1,6 +1,9 @@
 <div class="posts-container" 
     *ngIf="userState && userState.selectedUser.id !== -1">
-    <p>Posts from {{userState.selectedUser.name}}:</p>
+    <div class="row">
+        <p>Posts from {{userState.selectedUser.name}}:</p>
+    </div>
+    <app-loader *ngIf="postState.isPostListLoading"></app-loader>
     <div class="row posts-list">
         <div class="col-12 post-item"
             *ngFor="let post of postState.filteredPostList">
@@ -13,17 +16,21 @@
                 </div>
             </div>
 
-            <a href="#">
-                <span class="align-middle">+</span>
+            <a href="#" class="expand" (click)="onGetCommentsForPost(post)">
+                <span class="align-middle">{{post.isExpanded ? '-':'+'}}</span>
             </a>
-
+            <app-loader *ngIf="post.isCommentsLoading"></app-loader>
+            <app-comments *ngIf="post.isExpanded"
+               [commentsList]="post.comments">
+            </app-comments>
         </div>
     </div>
     <div class="row load-all-container" 
         *ngIf="postState.filteredPostList.length > 0 && !postState.showAll">
         <button 
             type="button" 
-            class="btn btn-primary">
+            class="btn btn-primary"
+            (click)="onShowAllPosts()">
             ...Load all
         </button>
     </div>

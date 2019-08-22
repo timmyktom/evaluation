@@ -1,5 +1,9 @@
 <div class="users-container">
-    <p>Please select a user to find their posts:</p>
+    <div class="row">
+        <p>Please select a user to find their posts:</p>
+    </div>
+    <app-loader *ngIf="userState.isUserListLoading"></app-loader>
+
     <div class="row users-list" 
         *ngIf="userState && userState.userList.length > 0">
         <div class="user-name"

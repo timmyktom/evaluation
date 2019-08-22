@@ -1,16 +1,24 @@
 .posts-container {
     .posts-list {
         .post-card {
-            width: 90%;
-            float: left;
+            display: inline-block;
+            width: 95%;
+
+            .alert-link {
+                cursor: default;
+            }
         }
         a {
-            &:hover {
-                text-decoration: none;
-            }
-            span {
-                font-size: 50px;
-                margin-left: 10px;
+            &.expand,
+            &.collapse {
+                float: right;
+                &:hover {
+                    text-decoration: none;
+                }
+                span {
+                    font-size: 50px;
+                    margin-left: 10px;
+                }
             }
         }
     }

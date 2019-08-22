@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { AppState } from '../shared/reducers';
 import { UserState } from '../users/users.reducers';
 import { PostState } from './posts.reducers';
+import { ShowAllPost, GetPostComments, ClosePostComments } from './posts.actions';
 
 @Component({
   selector: 'app-posts',
@@ -35,6 +36,18 @@ export class PostsComponent implements OnInit, OnDestroy {
     }
     if (this.postStoreSubscription) {
       this.postStoreSubscription.unsubscribe();
+    }
+  }
+
+  onShowAllPosts() {
+    this.store.dispatch(new ShowAllPost());
+  }
+
+  onGetCommentsForPost(post) {
+    if (post.isExpanded) {
+      this.store.dispatch(new ClosePostComments(post.id));
+    } else {
+      this.store.dispatch(new GetPostComments(post.id));
     }
   }
 }
