@@ -25,6 +25,23 @@ export class PostsEffects {
         )
     );
 
+    getPostCommentsEffects$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(actions.GET_POST_COMMENTS),
+            switchMap(({ payload }) => {
+                return this.postsService.getPostComments(payload)
+                .pipe(
+                    map(commentsList => {
+                        return new actions.GetPostCommentsSuccess(commentsList);
+                    }),
+                    catchError((error) => {
+                        return of(new actions.GetPostCommentsError(error));
+                    })
+                );
+            })
+        )
+    );
+
     constructor(
         private actions$: Actions,
         private postsService: PostsService

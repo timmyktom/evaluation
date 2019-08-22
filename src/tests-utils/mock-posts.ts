@@ -1,10 +1,11 @@
 export const mockPosts = [{
     userId: 1,
-    id: 3,
+    id: 1,
     title: 'ea sit aut',
     body: 'et s vel bore et velit aut',
     comments: [],
-    isExpanded: false
+    isExpanded: false,
+    isCommentsLoading: false
   },
   {
     userId: 1,
@@ -12,6 +13,7 @@ export const mockPosts = [{
     title: 'eum et est occaecati',
     body: 'ullammptillo velit',
     comments: [],
-    isExpanded: false
+    isExpanded: false,
+    isCommentsLoading: false
   }
 ];

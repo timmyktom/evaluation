@@ -52,6 +52,43 @@ export function PostsReducer(state = initialPostState, action: PostsActions.Post
                 filteredPostList: [...state.postList]
             };
             return newState;
+        case PostsActions.GET_POST_COMMENTS:
+            const indexPost = state.postList.findIndex(pst => pst.id === action.payload);
+            if (indexPost !== -1) {
+                state.postList[indexPost].isExpanded = true;
+                state.postList[indexPost].isCommentsLoading = true;
+            }
+            newState = {
+                ...state,
+                filteredPostList: state.showAll ? [...state.postList] : getFirstThreePosts(state.postList)
+            };
+            return newState;
+        case PostsActions.GET_POST_COMMENTS_SUCCESS:
+            const indexPostComment = state.postList.findIndex(pst => pst.id === action.payload[0].postId);
+            if (indexPostComment !== -1) {
+                state.postList[indexPostComment].comments = action.payload;
+                state.postList[indexPostComment].isCommentsLoading = false;
+            }
+            newState = {
+                ...state,
+                filteredPostList: state.showAll ? [...state.postList] : getFirstThreePosts(state.postList)
+            };
+            return newState;
+        case PostsActions.GET_POST_COMMENTS_ERROR:
+            newState = {...state,
+                isError: true
+            };
+            return newState;
+        case PostsActions.CLOSE_POST_COMMENTS:
+            const indexPostCommetClose = state.postList.findIndex(pst => pst.id === action.payload);
+            if (indexPostCommetClose !== -1) {
+                state.postList[indexPostCommetClose].isExpanded = false;
+            }
+            newState = {
+                ...state,
+                filteredPostList: state.showAll ? [...state.postList] : getFirstThreePosts(state.postList)
+            };
+            return newState;
         default:
             return state;
     }
@@ -62,7 +99,8 @@ function getPosts(postList) {
         return {
             ...post,
             comments: [],
-            isExpanded: false
+            isExpanded: false,
+            isCommentsLoading: false
         };
     });
 }

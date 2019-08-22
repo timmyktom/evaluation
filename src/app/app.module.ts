@@ -11,12 +11,16 @@ import { UsersComponent } from './users/users.component';
 import { reducers } from './shared/reducers';
 import { effects } from './shared/effects';
 import { PostsComponent } from './posts/posts.component';
+import { CommentsComponent } from './posts/comments/comments.component';
+import { LoaderComponent } from './shared/loader/loader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
-    PostsComponent
+    PostsComponent,
+    CommentsComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

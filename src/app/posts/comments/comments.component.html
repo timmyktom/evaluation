@@ -1,0 +1,15 @@
+<div class="comments-container card">
+    <div class="card-header">
+        Comments
+    </div>
+
+    <div class="card-body" *ngIf="commentsList.length > 0">
+        <ul class="list-group">
+            <li *ngFor="let comment of commentsList"
+                class="list-group-item d-flex justify-content-between align-items-center">
+                {{comment.body}}
+                <span class="badge badge-primary badge-pill">{{comment.email}}</span>
+            </li>
+        </ul>
+    </div>
+</div>
