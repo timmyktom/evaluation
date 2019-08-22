@@ -1,0 +1,15 @@
+<div class="users-container">
+    <p>Please select a user to find their posts:</p>
+    <div class="row users-list" 
+        *ngIf="userState && userState.userList.length > 0">
+        <div class="user-name"
+            *ngFor="let user of userState.userList">
+            <button 
+                type="button" 
+                class="btn btn-primary">
+                {{user.name.split(' ')[0]}}
+            </button>
+        </div>
+    </div>
+</div>
+
