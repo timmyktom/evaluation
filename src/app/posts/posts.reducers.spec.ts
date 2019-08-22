@@ -47,4 +47,20 @@ describe('PostsReducer', () => {
     });
   });
 
+  describe('SHOW_ALL_POST action', () => {
+    it('should set filteredPostList with postList', () => {
+        const { initialPostState } = fromPostsReducers;
+        const prevState = {...initialPostState,
+          filteredPostList: [{...mockPostData.mockPosts[0]}],
+          postList: mockPostData.mockPosts,
+          showAll: false
+        };
+        const action = new fromPostsActions.ShowAllPost();
+        const state = fromPostsReducers.PostsReducer(prevState, action);
+
+        expect(state.filteredPostList.length).toEqual(state.postList.length);
+        expect(state.showAll).toEqual(true);
+    });
+  });
+
 });

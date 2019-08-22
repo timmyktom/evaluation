@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { AppState } from '../shared/reducers';
 import { UserState } from '../users/users.reducers';
 import { PostState } from './posts.reducers';
+import { ShowAllPost } from './posts.actions';
 
 @Component({
   selector: 'app-posts',
@@ -36,5 +37,9 @@ export class PostsComponent implements OnInit, OnDestroy {
     if (this.postStoreSubscription) {
       this.postStoreSubscription.unsubscribe();
     }
+  }
+
+  onShowAllPosts() {
+    this.store.dispatch(new ShowAllPost());
   }
 }

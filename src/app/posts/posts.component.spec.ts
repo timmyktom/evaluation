@@ -6,6 +6,7 @@ import { AppState } from '../shared/reducers';
 import { PostsComponent } from './posts.component';
 import { UserState, initialUserState} from '../users/users.reducers';
 import { PostState, initialPostState } from '../posts/posts.reducers';
+import { ShowAllPost } from './posts.actions';
 import { MockReducer } from '../../tests-utils/';
 import * as mockUserData from '../../tests-utils/mock-users';
 import * as mockPostData from '../../tests-utils/mock-posts';
@@ -57,6 +58,17 @@ describe('PostsComponent', () => {
         component.ngOnDestroy();
         expect(component.userStoreSubscription.unsubscribe).toHaveBeenCalledTimes(1);
         expect(component.postStoreSubscription.unsubscribe).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('When onShowAllPosts is called ', () => {
+    it('should dispatch action ShowAllPost', (done) => {
+        const expectedAction = new ShowAllPost();
+        spyOn(store, 'dispatch').and.callFake((actualAction: Action) => {
+            expect(actualAction).toEqual(expectedAction);
+            done();
+        });
+        component.onShowAllPosts();
     });
   });
 });

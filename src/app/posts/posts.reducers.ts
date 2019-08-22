@@ -46,6 +46,12 @@ export function PostsReducer(state = initialPostState, action: PostsActions.Post
                 isError: true
             };
             return newState;
+        case PostsActions.SHOW_ALL_POST:
+            newState = {...state,
+                showAll: true,
+                filteredPostList: [...state.postList]
+            };
+            return newState;
         default:
             return state;
     }

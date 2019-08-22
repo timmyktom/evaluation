@@ -18,3 +18,9 @@ describe('GetUsersPostsError', () => {
     });
 });
 
+describe('ShowAllPost', () => {
+    it('should create an action', () => {
+        const action = new postActions.ShowAllPost();
+        expect(action.type).toEqual(postActions.SHOW_ALL_POST);
+    });
+});

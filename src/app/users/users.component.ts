@@ -32,5 +32,4 @@ export class UsersComponent implements OnInit, OnDestroy {
   onUserSelect(userId) {
     this.store.dispatch(new SetSelectedUser(userId));
   }
-
 }

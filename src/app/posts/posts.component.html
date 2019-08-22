@@ -1,6 +1,8 @@
 <div class="posts-container" 
     *ngIf="userState && userState.selectedUser.id !== -1">
-    <p>Posts from {{userState.selectedUser.name}}:</p>
+    <div class="row">
+        <p>Posts from {{userState.selectedUser.name}}:</p>
+    </div>
     <div class="row posts-list">
         <div class="col-12 post-item"
             *ngFor="let post of postState.filteredPostList">
@@ -13,7 +15,7 @@
                 </div>
             </div>
 
-            <a href="#">
+            <a href="#" >
                 <span class="align-middle">+</span>
             </a>
 
@@ -23,7 +25,8 @@
         *ngIf="postState.filteredPostList.length > 0 && !postState.showAll">
         <button 
             type="button" 
-            class="btn btn-primary">
+            class="btn btn-primary"
+            (click)="onShowAllPosts()">
             ...Load all
         </button>
     </div>
